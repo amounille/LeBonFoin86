@@ -1,24 +1,18 @@
 package fr.eni.lebonfoin.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HomeController {
 
     @GetMapping
-    public String home() {
-        return "Hello, World!";
+    public String index() {
+        return "index";
     }
 
     @GetMapping("/home")
-    public String user() {
+    public String home() {
         return "home";
     }
-
-    @GetMapping("/admin")
-    public String admin() {
-        return "Hello, Admin!";
-    }
-
 }
