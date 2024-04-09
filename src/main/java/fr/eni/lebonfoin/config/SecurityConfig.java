@@ -32,7 +32,7 @@
                             .defaultSuccessUrl("/home")
                             .permitAll())
                     .logout(logout -> logout
-                            .logoutSuccessUrl("/"));
+                            .logoutSuccessUrl("/login"));
             return http.build();
         }
 
@@ -44,8 +44,8 @@
         @Bean
         UserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
             JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-            jdbcUserDetailsManager.setUsersByUsernameQuery("select nom, mot_de_passe, 1 from users where nom=?");
-            jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select nom, administrateur from users  where nom=?");
+            jdbcUserDetailsManager.setUsersByUsernameQuery("select nom, mot_de_passe, 1 from UTILISATEURS where nom=?");
+            jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select nom, administrateur from UTILISATEURS  where nom=?");
             return jdbcUserDetailsManager;
         }
     }
