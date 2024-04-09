@@ -1,4 +1,4 @@
-    package fr.eni.lebonfoin.config;
+package fr.eni.lebonfoin.config;
     import javax.sql.DataSource;
 
     import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@
         SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http
                     .authorizeHttpRequests((authorize) -> authorize
-                            .requestMatchers("/css/**", "/favicon.ico", "/", "/index").permitAll()
+                            .requestMatchers("/css/**", "/favicon.ico", "/", "/index", "/home", "/registration").permitAll()
                             .requestMatchers("/user").hasAnyRole("USER")
                             .requestMatchers("/admin").hasAnyRole("ADMIN")
                             .anyRequest().authenticated()
@@ -49,3 +49,4 @@
             return jdbcUserDetailsManager;
         }
     }
+
