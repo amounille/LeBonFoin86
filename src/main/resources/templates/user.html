@@ -37,21 +37,22 @@
 
 <table>
     <tr>
-        <th>Name</th>
-        <th>Street</th>
-        <th>City</th>
-        <th>State</th>
-        <th>Zip Code</th>
-        <th>Gender</th>
+        <th>pseudo</th>
+        <th>nom</th>
+        <th>prenom</th>
+        <th>email</th>
+        <th>telephone</th>
+        <th>rue</th>
+
 
     </tr>
     <tr  th:each="users : ${user}">
-        <td  th:text="${users.name}"></td>
-        <td  th:text="${users.street}"></td>
-        <td  th:text="${users.city}"></td>
-        <td  th:text="${users.state}"></td>
-        <td  th:text="${users.zipCode}"></td>
-        <td  th:text="${users.gender}"></td>
+        <td  th:text="${users.pseudo}"></td>
+        <td  th:text="${users.nom}"></td>
+        <td  th:text="${users.prenom}"></td>
+        <td  th:text="${users.email}"></td>
+        <td  th:text="${users.telephone}"></td>
+        <td  th:text="${users.rue}"></td>
     </tr>
 
 </table>

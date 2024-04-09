@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.eni.lebonfoin.entity.User;
 import fr.eni.lebonfoin.repository.UserRepository;
+import fr.eni.lebonfoin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,10 +33,17 @@ public class UserController {
         return "register";
     }
 
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/users")
-    public String usersPage(Model model) {
-        List<User> listOfUsers = userRepository.findAll();
-        model.addAttribute("user", listOfUsers);
-        return "user";
+    public String getAllUsers(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "users";
     }
 }

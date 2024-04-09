@@ -17,7 +17,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName(); // Récupère le nom de l'utilisateur connecté
+        String username = auth.getName();
         model.addAttribute("username", username);
         return "home";
     }
