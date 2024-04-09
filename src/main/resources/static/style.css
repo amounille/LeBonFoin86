@@ -1,0 +1,32 @@
+/* Style de base pour le header */
+header {
+    background-color: #333; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    padding: 20px; /* Espacement intérieur */
+    display: flex; /* Utilisation de flexbox pour aligner les éléments */
+    justify-content: space-between; /* Aligner les éléments sur l'axe horizontal avec un espace entre eux */
+    align-items: center; /* Aligner les éléments sur l'axe vertical */
+}
+
+/* Style du logo */
+.logo img {
+    width: 50px; /* Largeur de l'image */
+    height: auto; /* Hauteur automatique pour maintenir les proportions */
+}
+
+/* Style de la navigation */
+nav {
+    display: flex; /* Utilisation de flexbox pour aligner les liens */
+}
+
+/* Style des liens dans la navigation */
+nav a {
+    color: #fff; /* Couleur du texte des liens */
+    text-decoration: none; /* Supprimer la décoration des liens */
+    margin-left: 20px; /* Espacement entre les liens */
+}
+
+/* Style des liens au survol */
+nav a:hover {
+    text-decoration: underline; /* Souligner les liens au survol */
+}
