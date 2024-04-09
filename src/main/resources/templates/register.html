@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" th:href="@{../css/styles.css}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Registration</h2>
+
+    <div th:if="${message != null}" class="message">
+        [[${message}]]
+    </div>
+
+    <form
+            th:action="@{/registration}"
+            method="post"
+            role="form"
+            th:object="${user}"
+    >
+        <div class="input-group">
+            <label for="pseudo">Pseudo:</label>
+            <input th:field="*{pseudo}" type="text" id="pseudo" name="pseudo" placeholder="Enter your Pseudo" required>
+        </div>
+        <div class="input-group">
+            <label for="nom">Nom:</label>
+            <input th:field="*{nom}" type="text" id="nom" name="nom" placeholder="Enter your Nom"  required>
+        </div>
+        <div class="input-group">
+            <label for="prenom">Prénom:</label>
+            <input th:field="*{prenom}" type="text" id="prenom" name="prenom" placeholder="Enter your Prénom" required>
+        </div>
+
+        <div class="input-group">
+            <label for="email">Email:</label>
+            <input th:field="*{email}" type="email" id="email" name="email" placeholder="Enter your Email" required>
+        </div>
+
+        <div class="input-group">
+            <label for="telephone">Téléphone:</label>
+            <input th:field="*{telephone}" type="text" id="telephone" name="telephone" placeholder="Enter your Téléphone" required>
+        </div>
+
+        <div class="input-group">
+            <label for="rue">Rue:</label>
+            <input th:field="*{rue}" type="text" id="rue" name="rue" placeholder="Enter your Rue" required>
+        </div>
+
+        <div class="input-group">
+            <label for="codePostal">Code Postal:</label>
+            <input th:field="*{codePostal}" type="text" id="codePostal" name="codePostal" placeholder="Enter your Code Postal" required>
+        </div>
+
+        <div class="input-group">
+            <label for="ville">Ville:</label>
+            <input th:field="*{ville}" type="text" id="ville" name="ville" placeholder="Enter your Ville" required>
+        </div>
+
+        <div class="input-group">
+            <label for="motDePasse">Mot de Passe:</label>
+            <input th:field="*{motDePasse}" type="password" id="motDePasse" name="motDePasse" placeholder="Enter your Mot de Passe" required>
+        </div>
+
+        <div class="input-gr">
+            <label for="credit">Crédit:</label>
+            <input th:field="*{credit}" type="text" id="credit" name="credit" placeholder="Enter your Crédit" required>
+        </div>
+
+        <div class="input-gr">
+            <label for="administrateur">Administrateur:</label>
+            <input th:field="*{administrateur}" type="checkbox" id="administrateur" name="administrateur">
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+    </form>
+</div>
+</body>
+</html>
