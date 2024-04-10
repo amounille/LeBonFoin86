@@ -3,64 +3,53 @@ package fr.eni.lebonfoin.service;
 import fr.eni.lebonfoin.entity.User;
 import fr.eni.lebonfoin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.List; // Pour List
-import org.springframework.mail.SimpleMailMessage; // Pour SimpleMailMessage
-import org.springframework.mail.javamail.JavaMailSender; // Pour JavaMailSender
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.UUID;
+import java.util.List;
 
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
+    private final UserRepository userRepository;
 
+    // Injection de JavaMailSender et UserRepository par constructeur
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public UserService(JavaMailSender mailSender, UserRepository userRepository) {
         this.mailSender = mailSender;
+        this.userRepository = userRepository;
     }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public void requestPasswordReset(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            // Generate and set a reset token with expiration.
-            String token = UUID.randomUUID().toString();
-            Date tokenExpiration = new Date(System.currentTimeMillis() + 3600000); // 1 hour
-            user.setResetToken(token);
-            user.setResetTokenExpiration(tokenExpiration);
-            userRepository.save(user);
-
-            // Construct and send the password reset email.
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("rick.bouyaghi2023@campus-eni.fr");
-            message.setTo(user.getEmail());
-            message.setSubject("MAIL ENVOYE");
-            message.setText("To reset your password, click the link below:\n"
-                    + "http://localhost:8080/reset-password?token=" + token);
-            mailSender.send(message);
-        }
+    public void createPasswordResetTokenForUser(User user, String token) {
+        user.setResetToken(token);
+        user.setTokenCreationDate(new Date()); // Enregistre la date de création
+        userRepository.save(user);
     }
 
-    public boolean resetPassword(String token, String newPassword) {
-        User user = userRepository.findByResetToken(token);
-        if (user != null && user.getResetTokenExpiration().after(new Date())) {
-            // Reset password and clear reset token.
-            user.setMotDePasse(passwordEncoder.encode(newPassword));
-            user.setResetToken(null);
-            user.setResetTokenExpiration(null);
-            userRepository.save(user);
-            return true;
-        }
-        return false;
+    public void sendResetToken(User user, String applicationUrl) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Réinitialisation du mot de passe");
+        mailMessage.setText("Pour réinitialiser votre mot de passe, cliquez sur le lien suivant : "
+                + applicationUrl + "/reset?token=" + user.getResetToken());
+        this.mailSender.send(mailMessage);
+    }
+
+    public User getUserByResetToken(String resetToken) {
+        return userRepository.findByResetToken(resetToken);
+    }
+
+    public void updatePassword(User user, String newPassword) {
+        user.setMotDePasse(newPassword);
+        user.setResetToken(null);
+        user.setTokenCreationDate(null);
+        userRepository.save(user);
     }
 }

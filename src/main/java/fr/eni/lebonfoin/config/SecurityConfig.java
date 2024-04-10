@@ -21,9 +21,10 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/css/**", "/favicon.ico", "/", "/index", "/home", "/registration", "/error", "/reset-password").permitAll()
-                        .requestMatchers("/user").hasAnyRole("USER")
-                        .requestMatchers("/admin").hasAnyRole("ADMIN")
+                        // Ajoutez les chemins pour la réinitialisation de mot de passe ici
+                        .requestMatchers("/css/**", "/js/**", "/favicon.ico", "/", "/index", "/home", "/registration", "/error", "/auth/forgot-password", "/auth/forgot", "/auth/reset").permitAll()
+                        .requestMatchers("/user/**").hasAnyRole("USER")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")
@@ -44,8 +45,8 @@ public class SecurityConfig {
     @Bean
     UserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.setUsersByUsernameQuery("select nom, mot_de_passe, 1 from UTILISATEURS where nom=?");
-        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select nom, administrateur from UTILISATEURS where nom=?");
+        jdbcUserDetailsManager.setUsersByUsernameQuery("select pseudo, mot_de_passe, 1 from UTILISATEURS where pseudo=?");
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select pseudo, administrateur from UTILISATEURS where pseudo=?");
         return jdbcUserDetailsManager;
     }
 }

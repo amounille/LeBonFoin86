@@ -59,5 +59,5 @@ public class User {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "token_creation_date")
-    private Date resetTokenExpiration;
+    private Date tokenCreationDate;
 }
