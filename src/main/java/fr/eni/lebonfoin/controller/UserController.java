@@ -19,6 +19,10 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+
 
     @GetMapping("/registration")
     public String getRegistrationPage(User user, Model model) {
@@ -26,9 +30,6 @@ public class UserController {
         return "register";
     }
 
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/registration")
     public String saveUser(User user, Model model) {
@@ -41,7 +42,7 @@ public class UserController {
         return "register";
     }
 
-    private final UserService userService;
+
 
     @Autowired
     public UserController(UserService userService) {
