@@ -21,35 +21,18 @@
         <div th:if="${message != null}" class="message">
             [[${message}]]
         </div>
+
         <form
-                th:action="@{/articles}"
+                th:action="@{/new/categorie}"
                 method="post"
-                role="form"
-                th:object="${article}"
+                th:object="${categorie}"
         >
             <div class="input-group">
-                <label for="nom_article">Nom de l'article:</label>
-                <input th:field="*{nomArticle}" type="text" id="nom_article" name="nom_article" placeholder="Entrez le nom de l'article" required>
-            </div>
-            <div class="input-group">
-                <label for="description">Description:</label>
-                <textarea th:field="*{description}" id="description" name="description" placeholder="Entrez la description de l'article" required></textarea>
-            </div>
-            <div class="input-group">
-                <label for="date_debut_encheres">Date de début d'enchères:</label>
-                <input th:field="*{dateDebutEncheres}" type="date" id="date_debut_encheres" name="date_debut_encheres" required>
-            </div>
-            <div class="input-group">
-                <label for="date_fin_encheres">Date de fin d'enchères:</label>
-                <input th:field="*{dateFinEncheres}" type="date" id="date_fin_encheres" name="date_fin_encheres" required>
+                <label for="libelle_categorie">Nom de la categorie:</label>
+                <input th:field="*{libelle}" type="text" id="libelle_categorie" placeholder="Entrez le nom de l'article" required>
             </div>
 
-            <div class="input-group">
-                <label for="prix_initial">Mise à prix:</label>
-                <input th:field="*{prixInitial}" type="number" id="prix_initial" name="prix_initial" placeholder="Entrez le prix initial" required>
-            </div>
-
-            <button type="submit" class="btn">Ajouter l'article</button>
+            <button type="submit" class="btn">Ajouter la categorie</button>
         </form>
     </div>
 </div>

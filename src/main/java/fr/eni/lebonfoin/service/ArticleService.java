@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class ArticleService {
 
-
     private final ArticleRepository articleRepository;
 
     @Autowired
