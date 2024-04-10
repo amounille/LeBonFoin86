@@ -27,10 +27,10 @@ public class Article {
     private String description;
 
     @Column(name = "date_debut_encheres")
-    private Date dateDebutEncheres;
+    private String dateDebutEncheres;
 
     @Column(name = "date_fin_encheres")
-    private Date dateFinEncheres;
+    private String dateFinEncheres;
 
     @Column(name = "prix_initial")
     private double prixInitial;

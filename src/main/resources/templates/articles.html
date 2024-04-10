@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des articles</title>
+</head>
+<body>
+<h1>Liste des articles</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nom de l'article</th>
+        <th>Description</th>
+        <th>Date de début d'enchères</th>
+        <th>Date de fin d'enchères</th>
+        <th>Prix initial</th>
+        <th>Prix de vente</th>
+        <th>Numéro de l'utilisateur</th>
+        <th>Numéro de catégorie</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="article : ${articles}">
+        <td th:text="${article.nomArticle}"></td>
+        <td th:text="${article.description}"></td>
+        <td th:text="${article.dateDebutEncheres}"></td>
+        <td th:text="${article.dateFinEncheres}"></td>
+        <td th:text="${article.prixInitial}"></td>
+        <td th:text="${article.prixVente}"></td>
+        <td th:text="${article.noUtilisateur}"></td>
+        <td th:text="${article.noCategorie}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
