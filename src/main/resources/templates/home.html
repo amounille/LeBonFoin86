@@ -20,9 +20,18 @@
 <body>
 <section class="title">
     <h2>Liste des enchères</h2>
+    <div>
+        <ul>
+            <li th:each="article : ${articles}">
+                <h3 th:text="${article.nomArticle}"></h3>
+                <p th:text="${article.description}"></p>
+                <!-- Ajoutez plus de détails selon vos besoins -->
+            </li>
+        </ul>
+    </div>
 </section>
-
 </body>
+
 </html>
 <style>
 
