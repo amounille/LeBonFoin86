@@ -36,7 +36,7 @@ public class PasswordResetController {
     public String forgotPassword(@RequestParam String email, HttpServletRequest request, Model model) {
         User user = userRepository.findByEmail(email);
         // Indiquer un message générique pour éviter l'énumération des comptes
-        String message = "If an account with that email exists, we have sent a reset link.";
+        String message = "Si un compte avec cette adresse e-mail existe, nous avons envoyé un lien de réinitialisation.";
         if (user != null) {
             String token = UUID.randomUUID().toString();
             userService.createPasswordResetTokenForUser(user, token);
