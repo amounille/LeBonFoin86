@@ -29,6 +29,7 @@
         <th>Prix de vente</th>
         <th>Numéro de l'utilisateur</th>
         <th>Numéro de catégorie</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -41,6 +42,13 @@
         <td th:text="${article.prixVente}"></td>
         <td th:text="${article.noUtilisateur}"></td>
         <td th:text="${article.noCategorie}"></td>
+        <td>
+            <form th:action="@{/article/{id}(id=${article.noArticle})}" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit">Supprimer</button>
+            </form>
+
+        </td>
     </tr>
     </tbody>
 </table>
