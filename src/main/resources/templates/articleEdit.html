@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier l'article</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Ajoutez vos styles CSS ici -->
+</head>
+<body>
+<h1>Modifier l'article</h1>
+<form th:action="@{/edit/article/{id}(id=${article.noArticle})}" method="post" role="form" th:object="${article}">
+    <input type="hidden" name="_method" value="put">
+    <input type="hidden" name="categoryId" th:value="${article.noCategorie}">
+    <label for="nomArticle">Nom de l'article :</label><br>
+    <input type="text" id="nomArticle" name="nomArticle" th:value="${article.nomArticle}"><br>
+    <label for="description">Description :</label><br>
+    <textarea id="description" name="description" rows="4" cols="50" th:text="${article.description}"></textarea><br>
+    <label for="dateDebutEncheres">Date de début d'enchères :</label><br>
+    <input type="text" id="dateDebutEncheres" name="dateDebutEncheres" th:value="${article.dateDebutEncheres}"><br>
+    <label for="dateFinEncheres">Date de fin d'enchères :</label><br>
+    <input type="text" id="dateFinEncheres" name="dateFinEncheres" th:value="${article.dateFinEncheres}"><br>
+    <label for="prixInitial">Prix initial :</label><br>
+    <input type="text" id="prixInitial" name="prixInitial" th:value="${article.prixInitial}"><br>
+    <label>
+        <select name="categoryId">
+            <option value="">Sélectionnez une catégorie</option>
+            <option th:each="category : ${categories}" th:value="${category.no_categorie}" th:text="${category.libelle}" th:selected="${category.no_categorie == article.noCategorie}"></option>
+        </select>
+    </label>
+
+    <button type="submit">Enregistrer les modifications</button>
+</form>
+</body>
+</html>

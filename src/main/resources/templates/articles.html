@@ -13,7 +13,7 @@
         <li><a href="/registration">S'inscrire</a></li>
         <li><a href="/login">Connexion</a></li>
         <li href="/profil" th:text="'Bienvenue : ' + ${username}">Nom de l'utilisateur</li>
-        <li><a href="/">ENI - ENCHERES</a></li>
+        <li><a href="/static">ENI - ENCHERES</a></li>
     </ul>
 </header>
 <body>
@@ -47,7 +47,9 @@
                 <input type="hidden" name="_method" value="delete">
                 <button type="submit">Supprimer</button>
             </form>
-
+            <form th:action="@{'/edit/article/' + ${article.noArticle}}" method="get">
+                <button type="submit">Modifier</button>
+            </form>
         </td>
     </tr>
     </tbody>
