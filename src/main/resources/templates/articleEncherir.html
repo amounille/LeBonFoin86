@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier l'article</title>
-    <link rel="stylesheet" href="/css/style.css"> </head>
+
+</head>
+<header th:replace="~{fragment/nav}"></header>
 <body>
+
 <h1>Détails de l'article</h1>
 
 <p>Nom de l'article : <span th:text="${article.nomArticle}"></span></p>

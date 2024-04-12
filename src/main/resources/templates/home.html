@@ -1,82 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Accueil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
-
-<header>
-    <ul class="nav">
-        <li><a href="/login?logout"><i class="fa fa-sign-out"></i></a></li>
-        <li><a href="/registration">S'inscrire</a></li>
-        <li><a href="/login">Connexion</a></li>
-        <li><a href="/profil"><i class="fa fa-user"></i> <span th:text="${username}"></span></a></li>
-        <li><a href="/">ENI - ENCHERES</a></li>
-
-    </ul>
-</header>
-
+<header th:replace="~{fragment/nav}"></header>
 <body>
+
 <section class="title">
     <h2>Liste des enchères</h2>
-    <div>
-        <ul>
-            <li th:each="article : ${articles}">
-                <h3 th:text="${article.nomArticle}"></h3>
-                <p th:text="${article.description}"></p>
-                <!-- Ajoutez plus de détails selon vos besoins -->
-            </li>
-        </ul>
-    </div>
+
 </section>
 </body>
-
 </html>
-<style>
-
-    h2{
-        font-size: 32px;
-    }
-    .title {
-        margin-top: 100px;
-        text-align: center;
-    }
-    body {
-        padding: 0px !important;
-        margin: 0px !important;
-    }
-    .nav {
-        padding-top: 10px !important;
-        padding-bottom: 10px !important;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 50px;
-        background-color: #0e21ab;
-    }
-
-    .nav li {
-        float: right;
-        margin-right: 2.5%;
-        font-weight: bold;
-        line-height: 50px;
-    }
-
-    .nav li:last-child {
-        float: left;
-        margin-left: 4%;
-    }
-
-    a {
-        font-family: sans-serif;
-        color: white;
-        text-decoration: none;
-    }
-    li {
-        font-family: sans-serif;
-        color: white;
-        text-decoration: none;
-    }
-</style>

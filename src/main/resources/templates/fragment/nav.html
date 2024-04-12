@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/nav.css">
+</head>
+<header>
+    <ul class="nav">
+        <li><a href="/articles">Article</a></li>
+        <li><a href="/registration">S'inscrire</a></li>
+        <li><a href="/login">Connexion</a></li>
+        <li href="/profil" th:text="'Bienvenue : ' + ${username}">Nom de l'utilisateur</li>
+        <li><a href="/static">ENI - ENCHERES</a></li>
+    </ul>
+</header>
+
+</html>

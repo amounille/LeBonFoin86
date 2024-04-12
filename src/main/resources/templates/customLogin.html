@@ -6,12 +6,7 @@
     <title>Liste des articles</title>
     <link rel="stylesheet" href="/css/login.css">
 </head>
-</header>
-    <ul class="nav">
-        <li><a href="/registration">S'inscrire</a></li>
-        <li><a href="/">ENI - ENCHERES</a></li>
-    </ul>
-</header>
+<header th:replace="~{fragment/nav}"></header>
 <body>
 <div class="login-container">
     <form th:action="@{/perform_login}" method="post" class="login-form">

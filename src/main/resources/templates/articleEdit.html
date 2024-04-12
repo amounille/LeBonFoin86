@@ -6,6 +6,7 @@
     <title>Modifier l'article</title>
     <link rel="stylesheet" href="/css/style.css"> <!-- Ajoutez vos styles CSS ici -->
 </head>
+<header th:replace="~{fragment/nav}"></header>
 <body>
 <h1>Modifier l'article</h1>
 <form th:action="@{/edit/article/{id}(id=${article.noArticle})}" method="post" role="form" th:object="${article}">
