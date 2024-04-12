@@ -21,22 +21,14 @@ public class HomeController {
         this.articleService = articleService;
     }
 
+
+
     @GetMapping("/")
-    public String index() {
-        return "redirect:/home";
-    }
-
-    @GetMapping("/home")
-    public String home(Model model) {
-        // Récupération du nom d'utilisateur à partir de l'authentification
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        model.addAttribute("username", username);
-
-        // Récupération et ajout des articles au modèle
+    public String getAllArticles(Model model) {
         List<Article> articles = articleService.getAllArticles();
         model.addAttribute("articles", articles);
-
-        return "home";
+        return "articlesIndex";
     }
+
+
 }

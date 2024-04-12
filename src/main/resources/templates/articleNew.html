@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'inscription</title>
     <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/formulaire.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
 </head>
 <header th:replace="~{fragment/nav}"></header>
 <body>
@@ -44,7 +47,6 @@
 
             <label>
                 <select name="categoryId">
-                    <option value="">Sélectionnez une catégorie</option>
                     <option th:each="category : ${categories}" th:value="${category.no_categorie}" th:text="${category.libelle}"></option>
                 </select>
             </label>
@@ -57,5 +59,4 @@
     </div>
 </div>
 </body>
-
 </html>

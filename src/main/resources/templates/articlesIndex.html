@@ -35,16 +35,9 @@
         <td th:text="${article.prixVente}"></td>
         <td th:text="${article.noUtilisateur}"></td>
         <td th:text="${article.noCategorie}"></td>
-        <td class="btn-actions">
+        <td>
             <form th:action="@{'/encherir/article/' + ${article.noArticle}}" method="get">
                 <button class="encherir" type="submit">Encherir</button>
-            </form>
-            <form th:action="@{'/edit/article/' + ${article.noArticle}}"  method="get">
-                <button class="modify"  type="submit">Modifier</button>
-            </form>
-            <form th:action="@{/article/{id}(id=${article.noArticle})}"  method="post">
-                <input type="hidden" name="_method" value="delete">
-                <button class="delete" type="submit">Supprimer</button>
             </form>
         </td>
     </tr>
