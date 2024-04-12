@@ -11,12 +11,13 @@ html, body {
     height: 100vh;
     position: relative;
     z-index: -2;
+    text-align: center;
 }
 .layout {
     align-items: center;
     display: flex;
     justify-content: center;
-    /*height: 100vh;*/
+    padding: 5%;
 }
 
 @-webkit-keyframes popUp {
@@ -67,7 +68,8 @@ html, body {
     margin-top: 40px;
     padding: 5px 30px 20px 35px;
     position: relative;
-    width: 400px;
+    width: 280px;
+    height: 215px;
 }
 .profile__account {
     align-self: center;
@@ -121,7 +123,7 @@ html, body {
 }
 
 .profile__stat {
-    padding: 10px;
+    padding: 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -197,5 +199,46 @@ html, body {
     text-align: center;
 }
 .container2 {
-    display: ruby-text;
+    justify-content: center;
+    text-align: center;
+    display: flex;
 }
+
+.profile__address div {
+    margin: 15px 0;
+}
+@media (max-width: 1480px) {
+    .layout {
+        padding: 2%;
+    }
+}
+@media (max-width: 1180px) {
+    .layout {
+        padding: 1%;
+    }
+    .container2 {
+
+        display: block;
+    }
+}
+
+@media (max-width: 500px) {
+    .profile__title {
+
+        font-size: 17px;
+    }
+    .profile__value {
+        font-size: 15px;
+
+    }
+    .profile__stats {
+        font-size: 20px;
+
+    }
+    .profile {
+
+        width: 250px;
+        height: 190px;
+    }
+}
+

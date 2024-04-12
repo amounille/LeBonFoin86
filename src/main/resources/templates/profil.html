@@ -5,15 +5,17 @@
         <title>Profil de l'utilisateur</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
         <link rel="stylesheet" href="/css/profil.css">
+        <link rel="stylesheet" href="/css/nav.css">
 
     </head>
     <header th:replace="~{fragment/nav}"></header>
     <body>
-    <div class="container2"> <!-- Conteneur pour les blocs .layout -->
+
+    <div class="container2">
 
         <div class="layout">
         <div class="profile">
-            <h3 class="profile__title">Informations Personnelles</h3>
+            <h3 class="profile__title">Informations</h3>
             <div class="profile__stats">
                 <div class="profile__stat">
                     <div class="profile__icon profile__icon--blue"><i class="fas fa-user"></i></div>
@@ -48,7 +50,8 @@
         </div>
     </div>
 
-    <div class="layout">
+
+        <div class="layout">
         <div class="profile">
             <h3 class="profile__title">Adresse</h3>
 
@@ -56,7 +59,11 @@
                 <div class="profile__stat">
                     <div class="profile__icon profile__icon--gold"><i class="fas fa-solid fa-envelope"></i></div>
                     <div class="profile__value">
-                        <div th:text="|${user.rue}, ${user.codePostal} ${user.ville}|"></div>
+                        <div class="profile__address">
+                            <div th:text="${user.rue}"></div>
+                            <div th:text="|${user.codePostal} ${user.ville}|"></div>
+                        </div>
+
                     </div>
                 </div>
             </div>
