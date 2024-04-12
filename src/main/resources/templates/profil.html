@@ -1,32 +1,67 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Profil de l'utilisateur</title>
-</head>
-<body>
-<h1>Liste des utilisateurs</h1>
-<table>
-    <tr>
-        <th>Pseudo</th>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Email</th>
-        <th>Téléphone</th>
-        <th>Rue</th>
-        <th>Code postal</th>
-        <th>Ville</th>
-    </tr>
-    <tr>
-        <td th:text="${user.pseudo}"></td>
-        <td th:text="${user.nom}"></td>
-        <td th:text="${user.prenom}"></td>
-        <td th:text="${user.email}"></td>
-        <td th:text="${user.telephone}"></td>
-        <td th:text="${user.rue}"></td>
-        <td th:text="${user.codePostal}"></td>
-        <td th:text="${user.ville}"></td>
-    </tr>
-</table>
-</body>
-</html>
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Profil de l'utilisateur</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="/css/profil.css">
+
+    </head>
+    <header th:replace="~{fragment/nav}"></header>
+    <body>
+    <div class="container2"> <!-- Conteneur pour les blocs .layout -->
+
+        <div class="layout">
+        <div class="profile">
+            <h3 class="profile__title">Informations Personnelles</h3>
+            <div class="profile__stats">
+                <div class="profile__stat">
+                    <div class="profile__icon profile__icon--blue"><i class="fas fa-user"></i></div>
+                    <div class="profile__value"> <div th:text="${user.pseudo}"></div>
+                    </div>
+                </div>
+                <div class="profile__stat">
+                    <div class="profile__icon profile__icon--blue"><i class="fas fa-user-friends"></i></div>
+                    <div class="profile__value">
+                        <div th:text="|${user.nom} ${user.prenom}|"></div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="layout">
+        <div class="profile">
+            <h3 class="profile__title">Contact</h3>
+            <div class="profile__stats">
+                <div class="profile__stat">
+                    <div class="profile__icon profile__icon--gold"><i class="fas fa-solid fa-envelope"></i></div>
+                    <div class="profile__value"> <div th:text="${user.email}"></div>
+                    </div>
+                </div>
+                <div class="profile__stat">
+                    <div class="profile__icon profile__icon--blue"><i class="fas fa-phone"></i></div>
+                    <div class="profile__value"> <div th:text="${user.telephone}"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="profile">
+            <h3 class="profile__title">Adresse</h3>
+
+            <div class="profile__stats">
+                <div class="profile__stat">
+                    <div class="profile__icon profile__icon--gold"><i class="fas fa-solid fa-envelope"></i></div>
+                    <div class="profile__value">
+                        <div th:text="|${user.rue}, ${user.codePostal} ${user.ville}|"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </body>
+    </html>

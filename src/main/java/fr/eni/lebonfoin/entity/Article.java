@@ -44,4 +44,75 @@ public class Article {
     private Long noCategorie;
 
 
+    public Long getNoCategorie() {
+        return noCategorie;
+    }
+
+    public void setNoCategorie(Long noCategorie) {
+        this.noCategorie = noCategorie;
+    }
+
+    public Long getNoUtilisateur() {
+        return noUtilisateur;
+    }
+
+    public void setNoUtilisateur(Long noUtilisateur) {
+        this.noUtilisateur = noUtilisateur;
+    }
+
+    public double getPrixVente() {
+        return prixVente;
+    }
+
+    public void setPrixVente(double prixVente) {
+        this.prixVente = prixVente;
+    }
+
+    public double getPrixInitial() {
+        return prixInitial;
+    }
+
+    public void setPrixInitial(double prixInitial) {
+        this.prixInitial = prixInitial;
+    }
+
+    public String getDateFinEncheres() {
+        return dateFinEncheres;
+    }
+
+    public void setDateFinEncheres(String dateFinEncheres) {
+        this.dateFinEncheres = dateFinEncheres;
+    }
+
+    public String getDateDebutEncheres() {
+        return dateDebutEncheres;
+    }
+
+    public void setDateDebutEncheres(String dateDebutEncheres) {
+        this.dateDebutEncheres = dateDebutEncheres;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getNomArticle() {
+        return nomArticle;
+    }
+
+    public void setNomArticle(String nomArticle) {
+        this.nomArticle = nomArticle;
+    }
+
+    public Long getNoArticle() {
+        return noArticle;
+    }
+
+    public void setNoArticle(Long noArticle) {
+        this.noArticle = noArticle;
+    }
 }

@@ -60,4 +60,8 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "token_creation_date")
     private Date tokenCreationDate;
+
+    public boolean isAdmin() {
+        return administrateur;
+    }
 }
