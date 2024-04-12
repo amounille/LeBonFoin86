@@ -1,16 +1,19 @@
 *{
     font-family: sans-serif;
 }
-form{
-    padding-bottom: 60px;
-    width: 400px;
-    background: #f1f1f1;
-    padding-right: 40px;
-    padding-left: 40px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+
+form, .form-encherir {
+    list-style-type: none;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 19%;
+    flex-wrap: wrap;
+    background-color: #f1f1f1;
+    padding: 30px;
+    margin-top: 10px;
 }
 input, textarea, select{
     font-size: 15px;
@@ -29,6 +32,7 @@ input, textarea, select{
     position: relative;
     margin: 15px 0;
 }
+
 h1{
     text-align: center;
 }
@@ -46,3 +50,4 @@ h1{
     cursor: pointer;
     transition: 0.5s;
 }
+

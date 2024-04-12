@@ -24,12 +24,11 @@
     <label for="dateFinEncheres">Date de fin d'enchères :</label><br>
     <input type="text" class="textbtn" id="dateFinEncheres" name="dateFinEncheres" th:value="${article.dateFinEncheres}"><br>
     <label for="prixInitial">Prix initial :</label><br>
-    <input type="text" id="prixInitial" class="textbtn"  name="prixInitial" th:value="${article.prixInitial}"><br>
-    <label>
-        <select name="categoryId">
-            <option th:each="category : ${categories}" th:value="${category.no_categorie}" th:text="${category.libelle}" th:selected="${category.no_categorie == article.noCategorie}"></option>
-        </select>
-    </label>
+    <input type="number" id="prixInitial" class="textbtn"  name="prixInitial" th:value="${article.prixInitial}"><br>
+    <select name="categoryId">
+        <option th:each="category : ${categories}" th:value="${category.no_categorie}" th:text="${category.libelle}" th:selected="${category.no_categorie == article.noCategorie}"></option>
+    </select>
+
 
     <button class="submit" type="submit">Enregistrer les modifications</button>
 </form>

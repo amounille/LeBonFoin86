@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <div class="formulaire">
-        <h2>Article</h2>
+
         <div th:if="${message != null}" class="message">
             [[${message}]]
         </div>
@@ -23,6 +23,7 @@
                 role="form"
                 th:object="${article}"
         >
+            <h1>Article</h1>
             <div class="input-group">
                 <label for="nom_article">Nom de l'article:</label>
                 <input th:field="*{nomArticle}" type="text" id="nom_article" name="nom_article" placeholder="Entrez le nom de l'article" required>

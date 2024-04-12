@@ -5,27 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier l'article</title>
     <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/formulaire.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <header th:replace="~{fragment/nav}"></header>
 <body>
+    <div class="form-encherir">
+    <h1>Détails de l'article</h1>
 
-<h1>Détails de l'article</h1>
+    <p>Nom de l'article : <br> <span th:text="${article.nomArticle}"></span></p>
+    <p>Description :<br> <span th:text="${article.description}"></span></p>
+    <p>Date de début d'enchères :<br> <span th:text="${article.dateDebutEncheres}"></span></p>
+    <p>Date de fin d'enchères : <br> <span th:text="${article.dateFinEncheres}"></span></p>
+    <p>Prix initial :<br> <span th:text="${article.prixInitial}"></span></p>
+    <p th:if="${dateEnchere != null}">
+        Date d'enchère :<br> <span th:text="${dateEnchere}"></span><br>
+        Montant d'enchère :<br> <span th:text="${montantEnchere}"></span>
+    </p>
 
-<p>Nom de l'article : <span th:text="${article.nomArticle}"></span></p>
-<p>Description : <span th:text="${article.description}"></span></p>
-<p>Date de début d'enchères : <span th:text="${article.dateDebutEncheres}"></span></p>
-<p>Date de fin d'enchères : <span th:text="${article.dateFinEncheres}"></span></p>
-<p>Prix initial : <span th:text="${article.prixInitial}"></span></p>
-<p th:if="${dateEnchere != null}">
-    Date d'enchère : <span th:text="${dateEnchere}"></span><br>
-    Montant d'enchère : <span th:text="${montantEnchere}"></span>
-</p>
-
-<form th:action="@{/encherir/article/{id}(id=${article.noArticle})}" method="post" role="form">
-    <input type="hidden" name="categoryId" placeholder="Category ID" th:value="${categoryId}" required>
-    <input type="number" name="montantEnchere" placeholder="Montant de l'enchère" required>
-    <button type="submit">Enchérir</button>
-</form>
+    <form th:action="@{/encherir/article/{id}(id=${article.noArticle})}" method="post" role="form" style="width: auto;">
+        <input type="hidden" name="categoryId" placeholder="Category ID" th:value="${categoryId}" required>
+        <input type="number" name="montantEnchere" placeholder="Montant de l'enchère" required>
+        <button style="width: auto;" type="submit">Enchérir</button>
+    </form>
+</div>
 </body>
 </html>
