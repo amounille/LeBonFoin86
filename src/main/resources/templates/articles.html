@@ -26,29 +26,28 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="article : ${articles}">
-        <td th:text="${article.nomArticle}"></td>
-        <td th:text="${article.description}"></td>
-        <td th:text="${article.dateDebutEncheres}"></td>
-        <td th:text="${article.dateFinEncheres}"></td>
-        <td th:text="${article.prixInitial}"></td>
-        <td th:text="${article.prixVente}"></td>
-        <td th:text="${article.noUtilisateur}"></td>
-        <td th:text="${article.noCategorie}"></td>
-        <td class="btn-actions">
-            <form th:action="@{'/encherir/article/' + ${article.noArticle}}" method="get">
-                <button class="encherir" type="submit">Encherir</button>
-            </form>
-            <form th:action="@{'/edit/article/' + ${article.noArticle}}"  method="get">
-                <button class="modify"  type="submit">Modifier</button>
-            </form>
-            <form th:action="@{/article/{id}(id=${article.noArticle})}"  method="post">
-                <input type="hidden" name="_method" value="delete">
-                <button class="delete" type="submit">Supprimer</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
+        <tr th:each="article : ${articles}">
+            <td th:text="${article.nomArticle}"></td>
+            <td th:text="${article.description}"></td>
+            <td th:text="${article.dateDebutEncheres}"></td>
+            <td th:text="${article.dateFinEncheres}"></td>
+            <td th:text="${article.prixInitial}"></td>
+            <td th:text="${article.prixVente}"></td>
+            <td th:text="${article.noUtilisateur}"></td>
+            <td th:text="${article.noCategorie}"></td>
+            <td class="btn-actions">
+                <form th:action="@{'/encherir/article/' + ${article.noArticle}}" method="get">
+                    <button class="encherir" type="submit">Encherir</button>
+                </form>
+                <form th:action="@{'/edit/article/' + ${article.noArticle}}"  method="get">
+                    <button class="modify"  type="submit">Modifier</button>
+                </form>
+                <form th:action="@{/article/{id}(id=${article.noArticle})}"  method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <button class="delete" type="submit">Supprimer</button>
+                </form>
+            </td>
+        </tr>
 </table>
 </body>
 </html>
