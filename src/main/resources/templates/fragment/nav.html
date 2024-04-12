@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="/css/nav.css">
 </head>
 <header>
     <ul class="nav">
-        <li><a href="/articles">Article</a></li>
+        <li><a href="/login?logout"><i class="fas fa-sign-out-alt"></i></a></li>
+        <li><a href="/profil"><i class="fas fa-user"></i></a></li>
+        <li><a href="/articles">Articles</a></li>
         <li><a href="/registration">S'inscrire</a></li>
         <li><a href="/login">Connexion</a></li>
-        <li href="/profil" th:text="'Bienvenue : ' + ${username}">Nom de l'utilisateur</li>
-        <li><a href="/static">ENI - ENCHERES</a></li>
+
+        <li><a href="/">ENI - ENCHERES</a></li>
     </ul>
 </header>
-
 </html>
