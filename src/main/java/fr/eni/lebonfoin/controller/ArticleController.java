@@ -2,19 +2,26 @@ package fr.eni.lebonfoin.controller;
 
 import fr.eni.lebonfoin.entity.Article;
 import fr.eni.lebonfoin.entity.Categorie;
+import fr.eni.lebonfoin.entity.Enchere;
 import fr.eni.lebonfoin.entity.User;
 import fr.eni.lebonfoin.repository.ArticleRepository;
 import fr.eni.lebonfoin.repository.CategorieRepository;
+import fr.eni.lebonfoin.repository.EnchereRepository;
 import fr.eni.lebonfoin.repository.UserRepository;
 import fr.eni.lebonfoin.service.ArticleService;
 import fr.eni.lebonfoin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -26,15 +33,18 @@ public class ArticleController {
     UserRepository userRepository;
     @Autowired
     CategorieRepository categorieRepository;
-
+    @Autowired
+    EnchereRepository enchereRepository;
     private final ArticleService articleService;
-    private final UserService userService;
+
 
     @Autowired
     public ArticleController(ArticleService articleService, UserService userService) {
         this.articleService = articleService;
-        this.userService = userService;
+
     }
+
+
 
     @GetMapping("/new/article")
     public String getArticleNew(Model model) {
@@ -110,18 +120,86 @@ public class ArticleController {
         articleToUpdate.setPrixInitial(updatedArticle.getPrixInitial());
         articleToUpdate.setPrixVente(updatedArticle.getPrixVente());
 
-        // Réutiliser l'utilisateur d'origine pour l'article mis à jour
         articleToUpdate.setNoUtilisateur(originalUserId);
         articleToUpdate.setNoCategorie(categorie.getNo_categorie());
 
-        // Enregistrer les modifications dans la base de données
         articleRepository.save(articleToUpdate);
 
         return "redirect:/articles";
     }
 
+    @GetMapping("/encherir/article/{noArticle}")
+    public String encheririArticle(@PathVariable("noArticle") Long articleNo, Model model) {
+        Article article = articleRepository.findById(articleNo)
+                .orElseThrow(() -> new IllegalArgumentException("Article non trouvé avec le numéro : " + articleNo));
+        List<Categorie> categories = categorieRepository.findAll();
+
+        LocalDateTime dateEnchere = null;
+        BigDecimal montantEnchere = null;
+        Enchere enchere = enchereRepository.findByNoArticle(articleNo);
+        String formattedDateEnchere = "";
+        if (enchere != null) {
+            dateEnchere = enchere.getDateEnchere();
+            montantEnchere = enchere.getMontantEnchere();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+            formattedDateEnchere = dateEnchere.format(formatter);
+        }
 
 
+        model.addAttribute("article", article);
+        model.addAttribute("categories", categories);
+        model.addAttribute("categoryId", article.getNoCategorie());
+        model.addAttribute("dateEnchere", formattedDateEnchere);
+        model.addAttribute("montantEnchere", montantEnchere);
+
+        return "articleEncherir";
+    }
+
+
+
+
+    @PostMapping("/encherir/article/{noArticle}")
+    public String encherirArticle(@PathVariable("noArticle") Long articleNo,
+                                  @RequestParam("categoryId") String categoryId,
+                                  @RequestParam("montantEnchere") BigDecimal nouveauMontantEnchere,
+                                  @AuthenticationPrincipal UserDetails currentUser,
+                                  Model model) {
+
+            Article article = articleRepository.findById(articleNo)
+                    .orElseThrow(() -> new IllegalArgumentException("Article non trouvé avec le numéro : " + articleNo));
+
+            Enchere enchereExistante = enchereRepository.findByNoArticle(articleNo);
+
+            if (enchereExistante != null && nouveauMontantEnchere.compareTo(enchereExistante.getMontantEnchere()) <= 0) {
+
+                model.addAttribute("error", "Le montant de l'enchère doit être supérieur à l'enchère actuelle.");
+
+                model.addAttribute("article", article);
+                model.addAttribute("categoryId", categoryId);
+                model.addAttribute("dateEnchere", enchereExistante.getDateEnchere());
+                model.addAttribute("montantEnchere", enchereExistante.getMontantEnchere());
+                // Charger les catégories pour l'affichage
+                List<Categorie> categories = categorieRepository.findAll();
+                model.addAttribute("categories", categories);
+                return "articleEncherir";
+            }
+
+        Enchere enchere = new Enchere();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User user = userRepository.findByPseudo(username);
+        Long userId = user.getNoUtilisateur();
+        enchere.setNoUtilisateur(Math.toIntExact(userId));
+
+        enchere.setNoArticle(Math.toIntExact(articleNo));
+        enchere.setMontantEnchere(nouveauMontantEnchere);
+        enchere.setDateEnchere(LocalDateTime.now());
+
+        enchereRepository.save(enchere);
+
+        return "redirect:/encherir/article/" + articleNo;
+    }
 
     @GetMapping("/articles")
     public String getAllArticles(Model model) {

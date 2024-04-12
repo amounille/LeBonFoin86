@@ -50,6 +50,9 @@
             <form th:action="@{'/edit/article/' + ${article.noArticle}}" method="get">
                 <button type="submit">Modifier</button>
             </form>
+            <form th:action="@{'/encherir/article/' + ${article.noArticle}}" method="get">
+                <button type="submit">Encherir</button>
+            </form>
         </td>
     </tr>
     </tbody>

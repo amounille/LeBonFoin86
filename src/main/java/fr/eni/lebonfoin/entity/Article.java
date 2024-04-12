@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter
@@ -43,5 +42,6 @@ public class Article {
 
     @Column(name = "no_categorie")
     private Long noCategorie;
+
 
 }
