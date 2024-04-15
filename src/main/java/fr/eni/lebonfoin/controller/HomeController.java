@@ -9,7 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -25,10 +29,17 @@ public class HomeController {
 
     @GetMapping("/")
     public String getAllArticles(Model model) {
-        List<Article> articles = articleService.getAllArticles();
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        List<Article> articles = articleService.getAllArticles().stream()
+                .filter(article -> {
+                    LocalDateTime debut = LocalDate.parse(article.getDateDebutEncheres(), formatter).atStartOfDay();
+                    LocalDateTime fin = LocalDate.parse(article.getDateFinEncheres(), formatter).atTime(23, 59, 59); // Fin de la journée
+                    return debut.isBefore(now) && fin.isAfter(now);
+                })
+                .collect(Collectors.toList());
         model.addAttribute("articles", articles);
         return "articlesIndex";
     }
-
-
 }
