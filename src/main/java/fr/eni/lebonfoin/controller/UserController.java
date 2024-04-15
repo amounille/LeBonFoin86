@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -85,5 +87,45 @@ public class UserController {
             // Par exemple, rediriger vers la page de connexion
             return "redirect:/login";
         }
+    }
+
+    //modification du profil
+    @PostMapping("/modifierProfil")
+    public String modifierProfil(@ModelAttribute("userForm") User userForm, Model model, RedirectAttributes redirectAttributes) {
+        // Récupérer l'utilisateur authentifié
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String nom = authentication.getName();
+        User user = userRepository.findByPseudo(nom);
+
+        // Vérifier si l'utilisateur existe
+        if (user == null) {
+            return "redirect:/profil";
+        }
+
+        // Mettre à jour les informations de l'utilisateur avec les données du formulaire
+        user.setPseudo(userForm.getPseudo());
+        user.setNom(userForm.getNom());
+        user.setEmail(userForm.getEmail());
+        user.setTelephone(userForm.getTelephone());
+        user.setRue(userForm.getRue());
+        user.setCodePostal(userForm.getCodePostal());
+        user.setVille(userForm.getVille());
+
+        try {
+            userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            model.addAttribute("error", "Une erreur s'est produite lors de l'enregistrement des modifications. Veuillez réessayer.");
+            return "error";
+        }
+
+        redirectAttributes.addFlashAttribute("message", "Modification réussie");
+
+        // Rediriger vers la page de confirmation
+        return "redirect:/confirmation";
+    }
+    //Page de confirmation
+    @GetMapping("/confirmation")
+    public String confirmationPage() {
+        return "confirmation";
     }
 }
