@@ -11,11 +11,11 @@
     </head>
     <header th:replace="~{fragment/nav}"></header>
     <body>
-    <div class="container2">
+    <div class="container2"> <!-- Conteneur pour les blocs .layout -->
 
         <div class="layout">
         <div class="profile">
-            <h3 class="profile__title">Informations</h3>
+            <h3 class="profile__title">Informations Personnelles</h3>
             <div class="profile__stats">
                 <div class="profile__stat">
                     <div class="profile__icon profile__icon--blue"><i class="fas fa-user"></i></div>
@@ -64,11 +64,6 @@
             </div>
         </div>
     </div>
-            <div class="profil">
-                <button class="profile__edit-button"><a th:href="@{/edit-profil}">Modifier Profil</a></button>
-            </div>
     </div>
-
     </body>
-
     </html>
