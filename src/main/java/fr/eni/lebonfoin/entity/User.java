@@ -16,6 +16,7 @@ import java.util.Date;
 @Table(name = "UTILISATEURS")
 public class User {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "no_utilisateur")
@@ -61,7 +62,10 @@ public class User {
     @Column(name = "token_creation_date")
     private Date tokenCreationDate;
 
+
+
     public boolean isAdmin() {
         return administrateur;
     }
+
 }

@@ -1,10 +1,12 @@
 package fr.eni.lebonfoin.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import fr.eni.lebonfoin.entity.User;
 import fr.eni.lebonfoin.repository.UserRepository;
 import fr.eni.lebonfoin.service.UserService;
+import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Controller
 public class UserController {
 
+    @Column(name = "mot_de_passe", nullable = false)
+    private String motDePasse;
+    @Column(name = "credit", nullable = false)
+    private Integer credit = 0; // Définir une valeur par défaut ici
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -59,31 +65,48 @@ public class UserController {
         return "users";
     }
 
-    //Récupérer l'utilisateur connecté
     @GetMapping("/profil")
     public String userProfil(Model model) {
-        // Récupérer l'objet Authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // Vérifier si l'utilisateur est authentifié
         if (authentication != null && authentication.isAuthenticated()) {
-
-
-            // Récupérer le nom d'utilisateur de l'utilisateur connecté
-            String nom = authentication.getName();
-
-            // Récupérer le profil de l'utilisateur à partir de la base de données
-            User user = userRepository.findByPseudo(nom);
-
-            // Passer les informations de l'utilisateur à la vue
-            model.addAttribute("user", user);
-
-            // Afficher la vue du profil de l'utilisateur
-            return "profil";
+            String username = authentication.getName();
+            Optional<User> userOptional = userRepository.findByPseudo(username);
+            if (userOptional.isPresent()) {
+                model.addAttribute("user", userOptional.get());
+                return "profil";
+            } else {
+                return "redirect:/login";
+            }
         } else {
-            // L'utilisateur n'est pas connecté, vous pouvez gérer cela comme vous le souhaitez
-            // Par exemple, rediriger vers la page de connexion
             return "redirect:/login";
         }
+    }
+
+
+
+    @GetMapping("/edit-profil")
+    public String editProfile(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<User> currentUserOptional = userRepository.findByPseudo(username);
+
+        if (!currentUserOptional.isPresent()) {
+            // Gérer l'absence d'utilisateur, par exemple en redirigeant vers une page d'erreur ou de login
+            return "redirect:/login";
+        }
+
+        User currentUser = currentUserOptional.get();
+        model.addAttribute("user", currentUser);
+        return "edit-profil";
+    }
+
+
+    // Méthode pour gérer la soumission du formulaire de modification
+    @PostMapping("/edit-profil")
+    public String updateProfile(@ModelAttribute User user, Model model) {
+        // Assurez-vous de crypter le mot de passe si vous permettez sa modification
+        userRepository.save(user);
+        model.addAttribute("message", "Profil mis à jour avec succès !");
+        return "redirect:/profil";
     }
 }

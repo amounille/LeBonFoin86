@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier Profil</title>
+    <link rel="stylesheet" href="/css/nav.css">
+</head>
+<body>
+<header th:replace="~{fragment/nav}"></header>
+<div class="container">
+    <form th:action="@{/edit-profil}" method="post" th:object="${user}">
+        <div>
+            <label for="pseudo">Pseudo</label>
+            <input type="text" id="pseudo" th:field="*{pseudo}" required>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" required>
+        </div>
+        <div>
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" th:field="*{nom}">
+        </div>
+        <div>
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" th:field="*{prenom}">
+        </div>
+        <div>
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" th:field="*{telephone}">
+        </div>
+        <div>
+            <label for="rue">Rue</label>
+            <input type="text" id="rue" th:field="*{rue}">
+        </div>
+        <div>
+            <label for="codePostal">Code Postal</label>
+            <input type="text" id="codePostal" th:field="*{codePostal}">
+        </div>
+        <div>
+            <label for="ville">Ville</label>
+            <input type="text" id="ville" th:field="*{ville}">
+        </div>
+        <div>
+            <label for="motDePasse">Mot de passe (laisser vide pour ne pas changer)</label>
+            <input type="password" id="motDePasse" th:field="*{motDePasse}">
+        </div>
+        <button type="submit">Sauvegarder les modifications</button>
+    </form>
+</div>
+</body>
+</html>

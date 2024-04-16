@@ -1,66 +1,50 @@
-table {
-    width: 85%; /* Largeur de 85% */
-    margin: 0 auto; /* Centre horizontalement */
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th {
-    background-color: #f2f2f2;
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-button {
-    padding: 6px 10px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-
-h1{
-    padding: 10px;
-    text-align: center;
-}
-.btn-actions{
-    display: flex;
+.card-container {
+    display: -webkit-box;    flex-wrap: wrap;
     justify-content: space-around;
+    padding: 20px;
 }
 
-.modify {
-    background-color: #2E8B57; /* Vert foncé */
+
+.card {
+    flex: 0 1 30%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #e1e4e8;
 }
 
-.delete {
-    background-color: #d32f2f; /* Rouge */
+
+.card h2 {
+    margin-top: 5px;
+    color: #003366;
+    margin-bottom: 10px;
+    text-align: center;
+
+}
+
+.card p {
+    color: #333;
+    line-height: 1;
 }
 
 .encherir {
-    background-color: #0e21ab; /* Bleu */
-}
-.new-article-button {
-    padding: 10px 20px;
     background-color: #0e21ab;
-    color: #fff;
     border: none;
-    border-radius: 5px;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.button-container {
-    text-align: right;
-    margin-bottom: 10px;
-    margin-right: 134px;
+.encherir:hover {
+    background-color: #0056b3;
+}
+form {
+    text-align: center;
 }

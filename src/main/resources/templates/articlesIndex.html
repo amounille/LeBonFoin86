@@ -3,45 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des articles</title>
+    <title>Accueil - Liste des articles</title>
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="/css/list.css">
 </head>
-<header th:replace="~{fragment/nav}"></header>
 <body>
+<header th:replace="~{fragment/nav}"></header>
+
 <h1>Liste des articles</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Nom de l'article</th>
-        <th>Description</th>
-        <th>Date de début d'enchères</th>
-        <th>Date de fin d'enchères</th>
-        <th>Prix initial</th>
-        <th>Prix de vente</th>
-        <th>Numéro de l'utilisateur</th>
-        <th>Numéro de catégorie</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="article : ${articles}">
-        <td th:text="${article.nomArticle}"></td>
-        <td th:text="${article.description}"></td>
-        <td th:text="${article.dateDebutEncheres}"></td>
-        <td th:text="${article.dateFinEncheres}"></td>
-        <td th:text="${article.prixInitial}"></td>
-        <td th:text="${article.prixVente}"></td>
-        <td th:text="${article.noUtilisateur}"></td>
-        <td th:text="${article.noCategorie}"></td>
-        <td>
-            <form th:action="@{'/encherir/article/' + ${article.noArticle}}" method="get">
-                <button class="encherir" type="submit">Encherir</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+
+<!-- Formulaire pour sélectionner la catégorie et saisir un texte de recherche -->
+<form id="filterForm" onsubmit="fetchFilteredArticles(); return false;">
+    <select id="categorySelect">
+        <option value="">Toutes les catégories</option>
+        <option th:each="categorie : ${categories}"
+                th:value="${categorie.no_categorie}"
+                th:text="${categorie.libelle}">Catégorie</option>
+    </select>
+    <input type="text" id="searchText" placeholder="Rechercher un article..." />
+    <button type="submit">Rechercher</button>
+</form>
+
+<!-- Container pour les cartes d'articles -->
+<div class="card-container">
+    <!-- Les cartes d'articles seront injectées ici par JavaScript -->
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchFilteredArticles();  // Charge initialement tous les articles dès que la page est chargée
+    });
+
+    function fetchFilteredArticles() {
+        var categoryId = document.getElementById('categorySelect').value;
+        var searchText = document.getElementById('searchText').value;
+        fetch(`/filter-articles?categoryId=${categoryId}&searchText=${encodeURIComponent(searchText)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(articles => {
+                const container = document.querySelector('.card-container');
+                container.innerHTML = ''; // Efface les articles existants
+
+                if (articles.length === 0) {
+                    container.innerHTML = '<p>Aucun article ne correspond aux critères de recherche.</p>';
+                } else {
+                    articles.forEach(article => {
+                        container.innerHTML += `
+                    <div class="card">
+                        <h2>${article.nomArticle}</h2>
+                        <p><strong>Début de l'enchère :</strong> ${article.dateDebutEncheres}</p>
+                        <p><strong>Fin de l'enchère :</strong> ${article.dateFinEncheres}</p>
+                        <p><strong>Prix de départ :</strong> ${article.prixInitial}</p>
+                        <p><strong>Prix de vente:</strong> ${article.prixVente}</p>
+                        <p><strong>Description :</strong><br>${article.description}</p>
+                        <form action='/encherir/article/${article.noArticle}' method='get'>
+                            <button type="submit">Encherir</button>
+                        </form>
+                    </div>`;
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                alert('Failed to fetch articles: ' + error.message); // Afficher l'erreur à l'utilisateur
+            });
+    }
+    /*]]>*/
+</script>
+
 </body>
 </html>

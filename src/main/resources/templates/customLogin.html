@@ -23,7 +23,10 @@
         </div>
         <input type="submit" value="Login" class="logbtn">
         <p><a class="mdp" th:href="@{/auth/forgot-password}">Mot de passe oublié ?</a></p>
-
+        <div class="checkbox">
+            <input type="checkbox" id="remember-me" name="remember-me" />
+            <label for="remember-me">Se souvenir de moi</label>
+        </div>
         <div class="bottom-text">
             Pas de compte ? <a class="connexion" th:href="@{/registration}">S'inscrire</a>
         </div>

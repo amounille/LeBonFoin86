@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ArticleController {
@@ -49,11 +50,17 @@ public class ArticleController {
     @GetMapping("/new/article")
     public String getArticleNew(Model model) {
         model.addAttribute("article", new Article());
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        User user = userRepository.findByPseudo(username);
-        Long userId = user.getNoUtilisateur();
+        Optional<User> userOptional = userRepository.findByPseudo(username);
 
+        if (!userOptional.isPresent()) {
+            return "redirect:/login";  // Ou une autre page appropriée si l'utilisateur n'est pas trouvé
+        }
+
+        User user = userOptional.get();
+        Long userId = user.getNoUtilisateur();
         List<Categorie> categories = categorieRepository.findAll();
 
         model.addAttribute("categories", categories);
@@ -62,20 +69,27 @@ public class ArticleController {
         return "articleNew";
     }
 
+
     @PostMapping("/new/article")
     public String saveArticle(@RequestParam("categoryId") String categoryId, Article article, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        User user = userRepository.findByPseudo(username);
+        Optional<User> userOptional = userRepository.findByPseudo(username);
+
+        if (!userOptional.isPresent()) {
+            return "redirect:/login";  // Ou gérer autrement si l'utilisateur n'est pas trouvé
+        }
+
+        User user = userOptional.get();
         Long userId = user.getNoUtilisateur();
         article.setNoUtilisateur(userId);
-        Categorie categorie = categorieRepository.findById(Long.valueOf(categoryId)).orElseThrow(() -> new IllegalArgumentException("Catégorie non trouvée"));
-        article.setNoCategorie(categorie.getNo_categorie());
 
+        Categorie categorie = categorieRepository.findById(Long.valueOf(categoryId))
+                .orElseThrow(() -> new IllegalArgumentException("Catégorie non trouvée"));
+        article.setNoCategorie(categorie.getNo_categorie());
         articleRepository.save(article);
 
         model.addAttribute("article", article);
-
         return "articleNew";
     }
 
@@ -156,42 +170,42 @@ public class ArticleController {
     }
 
 
-
-
     @PostMapping("/encherir/article/{noArticle}")
     public String encherirArticle(@PathVariable("noArticle") Long articleNo,
                                   @RequestParam("categoryId") String categoryId,
                                   @RequestParam("montantEnchere") BigDecimal nouveauMontantEnchere,
-                                  @AuthenticationPrincipal UserDetails currentUser,
+                                  @AuthenticationPrincipal UserDetails currentUserDetails,
                                   Model model) {
 
-            Article article = articleRepository.findById(articleNo)
-                    .orElseThrow(() -> new IllegalArgumentException("Article non trouvé avec le numéro : " + articleNo));
+        String username = currentUserDetails.getUsername();
+        Optional<User> userOptional = userRepository.findByPseudo(username);
 
-            Enchere enchereExistante = enchereRepository.findByNoArticle(articleNo);
+        if (!userOptional.isPresent()) {
+            // Gérer l'absence d'utilisateur
+            return "redirect:/login";
+        }
 
-            if (enchereExistante != null && nouveauMontantEnchere.compareTo(enchereExistante.getMontantEnchere()) <= 0) {
+        User user = userOptional.get();
 
-                model.addAttribute("error", "Le montant de l'enchère doit être supérieur à l'enchère actuelle.");
+        Article article = articleRepository.findById(articleNo)
+                .orElseThrow(() -> new IllegalArgumentException("Article non trouvé avec le numéro : " + articleNo));
 
-                model.addAttribute("article", article);
-                model.addAttribute("categoryId", categoryId);
-                model.addAttribute("dateEnchere", enchereExistante.getDateEnchere());
-                model.addAttribute("montantEnchere", enchereExistante.getMontantEnchere());
-                // Charger les catégories pour l'affichage
-                List<Categorie> categories = categorieRepository.findAll();
-                model.addAttribute("categories", categories);
-                return "articleEncherir";
-            }
+        Enchere enchereExistante = enchereRepository.findByNoArticle(articleNo);
+
+        if (enchereExistante != null && nouveauMontantEnchere.compareTo(enchereExistante.getMontantEnchere()) <= 0) {
+            model.addAttribute("error", "Le montant de l'enchère doit être supérieur à l'enchère actuelle.");
+            model.addAttribute("article", article);
+            model.addAttribute("categoryId", categoryId);
+            model.addAttribute("dateEnchere", enchereExistante.getDateEnchere());
+            model.addAttribute("montantEnchere", enchereExistante.getMontantEnchere());
+            List<Categorie> categories = categorieRepository.findAll();
+            model.addAttribute("categories", categories);
+            return "articleEncherir";
+        }
 
         Enchere enchere = new Enchere();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        User user = userRepository.findByPseudo(username);
         Long userId = user.getNoUtilisateur();
         enchere.setNoUtilisateur(Math.toIntExact(userId));
-
         enchere.setNoArticle(Math.toIntExact(articleNo));
         enchere.setMontantEnchere(nouveauMontantEnchere);
         enchere.setDateEnchere(LocalDateTime.now());
@@ -200,6 +214,7 @@ public class ArticleController {
 
         return "redirect:/encherir/article/" + articleNo;
     }
+
 
     @GetMapping("/articles")
     public String getAllArticles(Model model) {
