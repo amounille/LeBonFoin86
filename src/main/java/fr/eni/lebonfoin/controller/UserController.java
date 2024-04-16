@@ -54,25 +54,26 @@ public class UserController {
     public String userProfil(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> userOptional = userRepository.findByPseudo(username);
-        if (userOptional.isPresent()) {
-            model.addAttribute("user", userOptional.get());
+        User user = userRepository.findByPseudo(username);
+        if (user != null) {
+            model.addAttribute("user", user);
             return "profil";
         }
         return "redirect:/login";
     }
 
 
+
     @GetMapping("/edit-profil")
     public String editProfile(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> user = userRepository.findByPseudo(username);
-        if (!user.isPresent()) {
-            return "redirect:/login";
+        User user = userRepository.findByPseudo(username);
+        if (user != null) {
+            model.addAttribute("user", user);
+            return "edit-profil";
         }
-        model.addAttribute("user", user.get());
-        return "edit-profil";
+        return "redirect:/login";
     }
 
     @PostMapping("/edit-profil")
@@ -80,27 +81,23 @@ public class UserController {
     public String updateProfile(@ModelAttribute User updatedUser, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> result = userRepository.findByPseudo(username);
+        User existingUser = userRepository.findByPseudo(username);
 
-        if (!result.isPresent()) {
+        if (existingUser == null) {
             return "redirect:/login";
         }
 
-        User existingUser = result.get();
         System.out.println("Updating user: " + existingUser.getPseudo() + " with new data from " + updatedUser.getPseudo());
 
         updateExistingUser(existingUser, updatedUser);
         userRepository.save(existingUser);
-
-        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
         model.addAttribute("message", "Profil mis à jour avec succès !");
 
         return "redirect:/profil";
     }
 
+
     private void updateExistingUser(User existingUser, User updatedUser) {
-        System.out.println("Updating details from " + existingUser.getPseudo() + " to " + updatedUser.getPseudo());
-        existingUser.setPseudo(updatedUser.getPseudo()); // updating pseudo as well
         existingUser.setNom(updatedUser.getNom());
         existingUser.setPrenom(updatedUser.getPrenom());
         existingUser.setEmail(updatedUser.getEmail());
@@ -111,5 +108,4 @@ public class UserController {
         if (updatedUser.getMotDePasse() != null && !updatedUser.getMotDePasse().isEmpty()) {
             existingUser.setMotDePasse(passwordEncoder.encode(updatedUser.getMotDePasse()));
         }
-    }
-}
+    }}
