@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .permitAll())
                 .rememberMe(rememberMe -> rememberMe
                         .rememberMeParameter("remember-me")
-                        .tokenValiditySeconds(86400 * 30)
+                        .tokenValiditySeconds(86400 * 2)
                         .key("somethingVerySecure"));
         return http.build();
     }

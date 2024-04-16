@@ -2,6 +2,10 @@ a.connexion, a.mdp {
     color: #0e21ab;
 }
 
+label {
+    font-size: 14px;
+}
+
 p {
     text-align: center;
 }
