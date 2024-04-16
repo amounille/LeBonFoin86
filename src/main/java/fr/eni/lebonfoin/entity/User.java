@@ -22,7 +22,7 @@ public class User {
     private String codePostal;
     private String ville;
     private String motDePasse;
-    private Integer credit; // Assuming credit should be an integer.
+    private Integer credit;
     private boolean administrateur;
     private String resetToken;
 

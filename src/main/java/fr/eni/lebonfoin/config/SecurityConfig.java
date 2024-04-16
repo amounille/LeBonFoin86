@@ -31,7 +31,6 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        // Ajoutez les chemins pour la réinitialisation de mot de passe ici
                         .requestMatchers("/css/**", "/js/**", "/favicon.ico", "/", "/index", "/profil", "/edit-profil", "/filter-articles", "/home", "/registration", "/error", "/auth/forgot-password", "/auth/forgot", "/auth/reset").permitAll()
                         .requestMatchers("/user/**").hasAnyRole("USER")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
@@ -45,9 +44,9 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll())
                 .rememberMe(rememberMe -> rememberMe
-                        .rememberMeParameter("remember-me")  // Paramètre de requête pour activer "Se souvenir de moi"
-                        .tokenValiditySeconds(86400 * 30)    // Durée de validité du cookie, ici 30 jours
-                        .key("somethingVerySecure"));        // Clé de cryptage du cookie
+                        .rememberMeParameter("remember-me")
+                        .tokenValiditySeconds(86400 * 30)
+                        .key("somethingVerySecure"));
         return http.build();
     }
 
