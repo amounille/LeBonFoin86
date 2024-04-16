@@ -47,19 +47,19 @@ public class ArticleController {
 
 
 
+
     @GetMapping("/new/article")
     public String getArticleNew(Model model) {
         model.addAttribute("article", new Article());
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> userOptional = userRepository.findByPseudo(username);
+        User user = userRepository.findByPseudo(username);
 
-        if (!userOptional.isPresent()) {
+        if (user == null) {
             return "redirect:/login";  // Ou une autre page appropriée si l'utilisateur n'est pas trouvé
         }
 
-        User user = userOptional.get();
         Long userId = user.getNoUtilisateur();
         List<Categorie> categories = categorieRepository.findAll();
 
@@ -69,18 +69,16 @@ public class ArticleController {
         return "articleNew";
     }
 
-
     @PostMapping("/new/article")
     public String saveArticle(@RequestParam("categoryId") String categoryId, Article article, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> userOptional = userRepository.findByPseudo(username);
+        User user = userRepository.findByPseudo(username);
 
-        if (!userOptional.isPresent()) {
+        if (user == null) {
             return "redirect:/login";  // Ou gérer autrement si l'utilisateur n'est pas trouvé
         }
 
-        User user = userOptional.get();
         Long userId = user.getNoUtilisateur();
         article.setNoUtilisateur(userId);
 
@@ -92,7 +90,6 @@ public class ArticleController {
         model.addAttribute("article", article);
         return "articleNew";
     }
-
     @PostMapping(value = "/article/{noArticle}", params = "_method=delete")
     public String deleteArticleHiddenMethod(@PathVariable("noArticle") Long articleNo) {
         return deleteArticle(articleNo);
@@ -178,14 +175,11 @@ public class ArticleController {
                                   Model model) {
 
         String username = currentUserDetails.getUsername();
-        Optional<User> userOptional = userRepository.findByPseudo(username);
+        User user = userRepository.findByPseudo(username);
 
-        if (!userOptional.isPresent()) {
-            // Gérer l'absence d'utilisateur
+        if (user == null) {
             return "redirect:/login";
         }
-
-        User user = userOptional.get();
 
         Article article = articleRepository.findById(articleNo)
                 .orElseThrow(() -> new IllegalArgumentException("Article non trouvé avec le numéro : " + articleNo));
@@ -214,7 +208,6 @@ public class ArticleController {
 
         return "redirect:/encherir/article/" + articleNo;
     }
-
 
     @GetMapping("/articles")
     public String getAllArticles(Model model) {
