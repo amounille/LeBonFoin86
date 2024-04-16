@@ -96,6 +96,9 @@ public class UserController {
         return "redirect:/profil";
     }
 
+
+
+
     private void updateExistingUser(User existingUser, User updatedUser) {
         existingUser.setNom(updatedUser.getNom());
         existingUser.setPrenom(updatedUser.getPrenom());
