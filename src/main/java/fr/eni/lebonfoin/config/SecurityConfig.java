@@ -32,7 +32,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         // Ajoutez les chemins pour la réinitialisation de mot de passe ici
-                        .requestMatchers("/css/**", "/js/**", "/favicon.ico", "/", "/index", "/filter-articles", "/home", "/registration", "/error", "/auth/forgot-password", "/auth/forgot", "/auth/reset").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/favicon.ico", "/", "/index", "/profil", "/edit-profil", "/filter-articles", "/home", "/registration", "/error", "/auth/forgot-password", "/auth/forgot", "/auth/reset").permitAll()
                         .requestMatchers("/user/**").hasAnyRole("USER")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())

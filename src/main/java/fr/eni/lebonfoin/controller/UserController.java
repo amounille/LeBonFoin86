@@ -1,21 +1,22 @@
 package fr.eni.lebonfoin.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import fr.eni.lebonfoin.entity.User;
 import fr.eni.lebonfoin.repository.UserRepository;
 import fr.eni.lebonfoin.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 
 @Controller
 public class UserController {
@@ -24,32 +25,22 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    private final UserService userService;
-
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/registration")
-    public String getRegistrationPage(User user, Model model) {
+    public String getRegistrationPage(Model model) {
         model.addAttribute("user", new User());
         return "register";
     }
 
-
     @PostMapping("/registration")
-    public String saveUser(User user, Model model) {
-        // Encoder le mot de passe avec bcrypt avant de le sauvegarder
+    public String saveUser(@ModelAttribute User user, Model model) {
         String encodedPassword = passwordEncoder.encode(user.getMotDePasse());
         user.setMotDePasse(encodedPassword);
-
         userRepository.save(user);
-        model.addAttribute("message", "Submitted Successfully");
-        return "register";
-    }
-
-
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+        model.addAttribute("message", "Inscription réussie !");
+        return "redirect:/login";
     }
 
     @GetMapping("/users")
@@ -59,31 +50,66 @@ public class UserController {
         return "users";
     }
 
-    //Récupérer l'utilisateur connecté
     @GetMapping("/profil")
     public String userProfil(Model model) {
-        // Récupérer l'objet Authentication
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // Vérifier si l'utilisateur est authentifié
-        if (authentication != null && authentication.isAuthenticated()) {
-
-
-            // Récupérer le nom d'utilisateur de l'utilisateur connecté
-            String nom = authentication.getName();
-
-            // Récupérer le profil de l'utilisateur à partir de la base de données
-            User user = userRepository.findByPseudo(nom);
-
-            // Passer les informations de l'utilisateur à la vue
-            model.addAttribute("user", user);
-
-            // Afficher la vue du profil de l'utilisateur
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<User> userOptional = userRepository.findByPseudo(username);
+        if (userOptional.isPresent()) {
+            model.addAttribute("user", userOptional.get());
             return "profil";
-        } else {
-            // L'utilisateur n'est pas connecté, vous pouvez gérer cela comme vous le souhaitez
-            // Par exemple, rediriger vers la page de connexion
+        }
+        return "redirect:/login";
+    }
+
+
+    @GetMapping("/edit-profil")
+    public String editProfile(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<User> user = userRepository.findByPseudo(username);
+        if (!user.isPresent()) {
             return "redirect:/login";
+        }
+        model.addAttribute("user", user.get());
+        return "edit-profil";
+    }
+
+    @PostMapping("/edit-profil")
+    @Transactional
+    public String updateProfile(@ModelAttribute User updatedUser, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<User> result = userRepository.findByPseudo(username);
+
+        if (!result.isPresent()) {
+            return "redirect:/login";
+        }
+
+        User existingUser = result.get();
+        System.out.println("Updating user: " + existingUser.getPseudo() + " with new data from " + updatedUser.getPseudo());
+
+        updateExistingUser(existingUser, updatedUser);
+        userRepository.save(existingUser);
+
+        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+        model.addAttribute("message", "Profil mis à jour avec succès !");
+
+        return "redirect:/profil";
+    }
+
+    private void updateExistingUser(User existingUser, User updatedUser) {
+        System.out.println("Updating details from " + existingUser.getPseudo() + " to " + updatedUser.getPseudo());
+        existingUser.setPseudo(updatedUser.getPseudo()); // updating pseudo as well
+        existingUser.setNom(updatedUser.getNom());
+        existingUser.setPrenom(updatedUser.getPrenom());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setTelephone(updatedUser.getTelephone());
+        existingUser.setRue(updatedUser.getRue());
+        existingUser.setCodePostal(updatedUser.getCodePostal());
+        existingUser.setVille(updatedUser.getVille());
+        if (updatedUser.getMotDePasse() != null && !updatedUser.getMotDePasse().isEmpty()) {
+            existingUser.setMotDePasse(passwordEncoder.encode(updatedUser.getMotDePasse()));
         }
     }
 }
