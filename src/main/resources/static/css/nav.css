@@ -3,7 +3,7 @@ body {
     margin: 0px;
 }
 
-.nav {
+/*.nav {
     height: 50px;
     width: 100%;
     background-color: #4d4d4d;
@@ -138,4 +138,46 @@ li {
     font-family: sans-serif;
     color: white;
     text-decoration: none;
+}*/
+
+.header-nav{
+    background: #0e21ab;
+    list-style: none;
+    margin: 0;
+    padding: 20px 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.header-nav .nom-logo{
+    margin-left: 100px;
+}
+
+.mod_navigation {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: 50%;
+    margin-right: 100px;
+}
+
+.mod_navigation ul.mod_nav{
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+.mod_navigation ul li {
+    margin-left: 35px;
+    padding: 10px 0px;
+}
+
+.mod_navigation a:hover{
+    color: #8fc8e9;
+    transition-duration: 0.5s
+}
+

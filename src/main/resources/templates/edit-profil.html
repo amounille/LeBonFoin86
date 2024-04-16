@@ -4,23 +4,65 @@
     <meta charset="UTF-8">
     <title>Modifier Profil</title>
     <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/profil.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
-<body>
 <header th:replace="~{fragment/nav}"></header>
-<div class="container">
-    <form th:action="@{/edit-profil}" method="post" th:object="${user}">
-        <input type="hidden" th:field="*{noUtilisateur}" />
-        <input type="text" th:field="*{pseudo}" required />
-        <input type="email" th:field="*{email}" required />
-        <input type="text" th:field="*{nom}" />
-        <input type="text" th:field="*{prenom}" />
-        <input type="tel" th:field="*{telephone}" />
-        <input type="text" th:field="*{rue}" />
-        <input type="text" th:field="*{codePostal}" />
-        <input type="text" th:field="*{ville}" />
-        <input type="password" th:field="*{motDePasse}" placeholder="Laisser vide pour ne pas changer" />
-        <button type="submit">Sauvegarder les modifications</button>
-    </form>
-</div>
+<body id="edit-1">
+    <div class="container form-modif">
+        <form class="login-form" th:action="@{/edit-profil}" method="post" th:object="${user}">
+            <h1>Modifier le profil</h1>
+            <input type="hidden" th:field="*{noUtilisateur}" />
+            <div class="cote">
+                <div class="txtb">
+                    <p>Nom : </p>
+                    <input type="text" th:field="*{nom}" />
+                </div>
+                <div class="txtb">
+                    <p>Prénom : </p>
+                    <input type="text" th:field="*{prenom}" />
+                </div>
+            </div>
+            <div class="cote">
+                <div class="txtb">
+                    <p>Pseudo : </p>
+                    <input type="text" th:field="*{pseudo}" required />
+                </div>
+                <div class="txtb">
+                    <p>Téléphone : </p>
+                    <input type="tel" th:field="*{telephone}" />
+                </div>
+            </div>
+
+            <div class="txtb">
+                <p>Email : </p>
+                <input type="email" th:field="*{email}" required />
+            </div>
+
+
+
+            <div class="txtb">
+                <p>Rue : </p>
+                <input type="text" th:field="*{rue}" />
+            </div>
+            <div class="cote">
+                <div class="txtb">
+                    <p>Ville : </p>
+                    <input type="text" th:field="*{ville}" />
+                </div>
+                <div class="txtb">
+                    <p>Code postal : </p>
+                    <input type="text" th:field="*{codePostal}" />
+                </div>
+            </div>
+
+            <div class="txtb">
+                <p>Mot de passe : </p>
+                <input type="password" th:field="*{motDePasse}" placeholder="Laisser vide pour ne pas changer" />
+            </div>
+                <button class="logbtn" type="submit">Sauvegarder les modifications</button>
+        </form>
+    </div>
 </body>
 </html>

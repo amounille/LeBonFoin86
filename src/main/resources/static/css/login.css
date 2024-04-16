@@ -88,22 +88,21 @@ li {
     text-decoration: none;
 }
 
+.login-container, .form-modif{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
 .login-form {
-    padding-bottom: 60px;
-    width: 400px;
+    padding: 0 40px 60px 40px;
+    width: 25%;
     background: #f1f1f1;
-    padding-right: 40px;
-    padding-left: 40px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .login-form h1 {
-    margin-top: 60px;
+    margin: 65px 0 25px 0;
     text-align: center;
-    margin-bottom: 60px;
 }
 
 .logbtn {
