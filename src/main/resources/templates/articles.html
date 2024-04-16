@@ -44,14 +44,18 @@
                 <form th:action="@{'/encherir/article/' + ${article.noArticle}}" method="get">
                     <button class="encherir" type="submit">Encherir</button>
                 </form>
-                <form th:action="@{'/edit/article/' + ${article.noArticle}}"  method="get">
-                    <button class="modify"  type="submit">Modifier</button>
-                </form>
-                <form th:action="@{/article/{id}(id=${article.noArticle})}"  method="post">
-                    <input type="hidden" name="_method" value="delete">
-                    <button class="delete" type="submit">Supprimer</button>
-                </form>
+
+                <th:block th:if="${article.noUtilisateur == userId}">
+                    <form th:action="@{'/edit/article/' + ${article.noArticle}}"  method="get">
+                        <button class="modify"  type="submit">Modifier</button>
+                    </form>
+                    <form th:action="@{/article/{id}(id=${article.noArticle})}"  method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <button class="delete" type="submit">Supprimer</button>
+                    </form>
+                </th:block>
             </td>
+
         </tr>
 </table>
 </body>
