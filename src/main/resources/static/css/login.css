@@ -149,4 +149,24 @@ li {
     padding: 0 5px;
     height: 40px;
 }
+.cote{
+    display: flex;
+    justify-content: space-between;
+}
 
+#edit-2 .txtb {
+    margin: 25px 0 0 0;
+}
+#edit-2 .formulaire label{
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.cote .txtb {
+    flex: 0 0 45%;
+}
+
+#edit-2 .input-gr{
+    margin: 25px 0;
+}
