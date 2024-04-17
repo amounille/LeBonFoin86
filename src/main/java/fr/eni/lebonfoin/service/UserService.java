@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -57,6 +58,11 @@ public class UserService {
         user.setTokenCreationDate(null);
         userRepository.save(user);
     }
-
+    public User findByPseudo(String pseudo) {
+        return userRepository.findByPseudo(pseudo);
+    }
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
 
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Utilisateurs</title>
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<header th:replace="~{fragment/nav}"></header>
+<body>
+<h1>Liste des Utilisateurs</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Pseudo</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Rue</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.pseudo}"></td>
+        <td th:text="${user.nom}"></td>
+        <td th:text="${user.prenom}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.telephone}"></td>
+        <td th:text="${user.rue}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
