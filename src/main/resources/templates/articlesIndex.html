@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,8 +21,10 @@
                 th:value="${categorie.no_categorie}"
                 th:text="${categorie.libelle}">Catégorie</option>
     </select>
-    <input type="text" id="searchText" placeholder="Rechercher un article..." />
-    <button type="submit">Rechercher</button>
+    <div class="txtb">
+        <input type="text" id="searchText" placeholder="Rechercher un article..." />
+    </div>
+    <button type="submit" class="rech">Rechercher</button>
 </form>
 
 <!-- Container pour les cartes d'articles -->

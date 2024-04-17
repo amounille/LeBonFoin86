@@ -110,7 +110,6 @@ li {
 
 .logbtn {
     font-size: 16px;
-
     display: block;
     width: 100%;
     height: 50px;
@@ -169,4 +168,14 @@ li {
 
 #edit-2 .input-gr{
     margin: 25px 0;
+}
+
+.txtb:hover {
+    border-bottom: 2px solid #8fc8e9;
+    transition-duration: 0.5s;
+}
+
+.logbtn:hover{
+    background-color: #8fc8e9;
+    transition-duration: 0.5s;
 }

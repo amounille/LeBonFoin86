@@ -19,54 +19,54 @@
             <div class="cote">
                 <div class="input-group txtb">
                     <label for="nom">Nom:</label>
-                    <input th:field="*{nom}" type="text" id="nom" name="nom" placeholder="Enter your Nom"  required>
+                    <input th:field="*{nom}" type="text" id="nom" name="nom" placeholder="Votre nom"  required>
                 </div>
                 <div class="input-group txtb">
                     <label for="prenom">Prénom:</label>
-                    <input th:field="*{prenom}" type="text" id="prenom" name="prenom" placeholder="Enter your Prénom" required>
+                    <input th:field="*{prenom}" type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
                 </div>
             </div>
 
             <div class="cote">
                 <div class="input-group txtb">
                     <label for="pseudo">Pseudo:</label>
-                    <input th:field="*{pseudo}" type="text" id="pseudo" name="pseudo" placeholder="Enter your Pseudo" required>
+                    <input th:field="*{pseudo}" type="text" id="pseudo" name="pseudo" placeholder="Votre pseudo" required>
                 </div>
                 <div class="input-group txtb">
                     <label for="telephone">Téléphone:</label>
-                    <input th:field="*{telephone}" type="text" id="telephone" name="telephone" placeholder="Enter your Téléphone" required pattern="[0-9]{10}">
+                    <input th:field="*{telephone}" type="text" id="telephone" name="telephone" placeholder="Votre téléphone" required pattern="[0-9]{10}">
                 </div>
             </div>
 
             <div class="input-group txtb">
                 <label for="email">Email:</label>
-                <input th:field="*{email}" type="email" id="email" name="email" placeholder="Enter your Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <input th:field="*{email}" type="email" id="email" name="email" placeholder="Votre email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
             </div>
 
             <div class="input-group txtb">
                 <label for="rue">Rue:</label>
-                <input th:field="*{rue}" type="text" id="rue" name="rue" placeholder="Enter your Rue" required>
+                <input th:field="*{rue}" type="text" id="rue" name="rue" placeholder="Votre rue" required>
             </div>
 
             <div class="cote">
                 <div class="input-group txtb">
                     <label for="ville">Ville:</label>
-                    <input th:field="*{ville}" type="text" id="ville" name="ville" placeholder="Enter your Ville" required>
+                    <input th:field="*{ville}" type="text" id="ville" name="ville" placeholder="Votre ville" required>
                 </div>
                 <div class="input-group txtb">
                     <label for="codePostal">Code Postal:</label>
-                    <input th:field="*{codePostal}" type="text" id="codePostal" name="codePostal" placeholder="Enter your Code Postal" required pattern="[0-9]{5}">
+                    <input th:field="*{codePostal}" type="text" id="codePostal" name="codePostal" placeholder="Votre code Postal" required pattern="[0-9]{5}">
                 </div>
             </div>
 
             <div class="input-group txtb">
                 <label for="motDePasse">Mot de Passe:</label>
-                <input th:field="*{motDePasse}" type="password" id="motDePasse" name="motDePasse" placeholder="Enter your Mot de Passe" required>
+                <input th:field="*{motDePasse}" type="password" id="motDePasse" name="motDePasse" placeholder="Votre mot de passe" required>
             </div>
 
             <div class="input-group txtb">
                 <label for="credit">Crédit:</label>
-                <input th:field="*{credit}" type="number" id="credit" name="credit" placeholder="Enter your Crédit" required>
+                <input th:field="*{credit}" type="number" id="credit" name="credit" placeholder="Votre crédit" required>
             </div>
 
             <div class="input-gr">
@@ -74,7 +74,7 @@
                 <input th:field="*{administrateur}" type="checkbox" id="administrateur" name="administrateur">
             </div>
 
-            <button type="submit" class="btn logbtn" >Register</button>
+            <button type="submit" class="btn logbtn" >Inscription</button>
         </form>
 
         <div th:if="${message != null}" class="message">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,10 +16,10 @@
         <p th:if="${param.logout}" class="logout-message">Vous avez été déconnécté.</p>
         <h1>Connexion</h1>
         <div class="txtb">
-            <input type="text" id="username" name="username" placeholder="Username" required autofocus />
+            <input type="text" id="username" name="username" placeholder="Pseudo" required autofocus />
         </div>
         <div class="txtb">
-            <input type="password" id="password" name="password" placeholder="Password" required />
+            <input type="password" id="password" name="password" placeholder="Mot de passe" required />
         </div>
         <input type="submit" value="Login" class="logbtn">
         <p><a class="mdp" th:href="@{/auth/forgot-password}">Mot de passe oublié ?</a></p>
