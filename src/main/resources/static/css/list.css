@@ -67,6 +67,8 @@ select {
 
 .card-container{
     text-align: center;
+    display: flex;
+    gap: 2%;
 }
 
 .txtb{
