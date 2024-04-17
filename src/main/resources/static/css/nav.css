@@ -139,6 +139,9 @@ li {
     color: white;
     text-decoration: none;
 }*/
+*{
+    font-family: sans-serif;
+}
 
 .header-nav{
     background: #0e21ab;
@@ -174,6 +177,11 @@ li {
 .mod_navigation ul li {
     margin-left: 35px;
     padding: 10px 0px;
+}
+
+.mod_navigation a, .nom-logo a {
+    color: #fff;
+    text-decoration: none;
 }
 
 .mod_navigation a:hover{
