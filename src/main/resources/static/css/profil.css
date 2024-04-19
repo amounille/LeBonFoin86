@@ -267,3 +267,12 @@ html, body {
     margin-top: 25px;
 }
 
+.profil {
+    display: flex;
+    justify-content: center;
+}
+
+.profil .logbtn {
+    width: 10% ;
+}
+
