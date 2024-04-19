@@ -34,4 +34,5 @@ public class ArticleService {
         return articleRepository.findByNomArticleContainingIgnoreCase(searchText);
     }
 
+
 }

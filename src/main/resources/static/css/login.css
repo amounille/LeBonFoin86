@@ -95,8 +95,7 @@ li {
 .login-container, .form-modif{
     display: flex;
     justify-content: center;
-    margin-top: 50px;
-}
+    margin-top: 110px;}
 .login-form {
     padding: 10px 40px 70px 40px;
     width: 22%;

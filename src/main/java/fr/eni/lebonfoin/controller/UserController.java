@@ -5,8 +5,11 @@ import java.util.Optional;
 
 import fr.eni.lebonfoin.entity.User;
 import fr.eni.lebonfoin.repository.UserRepository;
+import fr.eni.lebonfoin.service.ArticleService;
 import fr.eni.lebonfoin.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +30,9 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ArticleService articleService;
+
 
     @GetMapping("/registration")
     public String getRegistrationPage(Model model) {
@@ -97,6 +103,7 @@ public class UserController {
     }
 
 
+
     private void updateExistingUser(User existingUser, User updatedUser) {
         existingUser.setNom(updatedUser.getNom());
         existingUser.setPrenom(updatedUser.getPrenom());
@@ -108,4 +115,6 @@ public class UserController {
         if (updatedUser.getMotDePasse() != null && !updatedUser.getMotDePasse().isEmpty()) {
             existingUser.setMotDePasse(passwordEncoder.encode(updatedUser.getMotDePasse()));
         }
-    }}
+    }
+
+}
