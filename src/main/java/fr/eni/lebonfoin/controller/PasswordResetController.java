@@ -26,30 +26,36 @@ public class PasswordResetController {
     @Autowired
     private UserRepository userRepository;
 
-    // Ajout d'une méthode GET pour afficher le formulaire de réinitialisation
+    // Méthode GET pour afficher le formulaire de demande de réinitialisation de mot de passe
     @GetMapping("/forgot-password")
     public String showForgotPasswordForm() {
         return "request-reset-password";
     }
 
+    // Méthode POST pour traiter la demande de réinitialisation de mot de passe
     @PostMapping("/forgot")
     public String forgotPassword(@RequestParam String email, HttpServletRequest request, Model model) {
         User user = userRepository.findByEmail(email);
-        // Indiquer un message générique pour éviter l'énumération des comptes
         String message = "Si un compte avec cette adresse e-mail existe, nous avons envoyé un lien de réinitialisation.";
         if (user != null) {
             String token = UUID.randomUUID().toString();
             userService.createPasswordResetTokenForUser(user, token);
-            String appUrl = request.getScheme() + "://" + request.getServerName();
+            // Générer l'URL complète avec le port et le token pour la réinitialisation
+            String appUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/auth/new-password?token=" + token;
             userService.sendResetToken(user, appUrl);
         }
         model.addAttribute("message", message);
-        return "request-reset-password"; // Reste sur la même page et affiche le message
+        return "request-reset-password"; // Reste sur la même page et affiche un message
     }
 
+    // Méthode GET pour afficher le formulaire de saisie du nouveau mot de passe
+    @GetMapping("/new-password")
+    public String showNewPasswordForm(@RequestParam String token, Model model) {
+        model.addAttribute("token", token);
+        return "new-password"; // Nom de la vue Thymeleaf pour le formulaire de nouveau mot de passe
+    }
 
-
-    // Méthode POST existante pour réinitialiser le mot de passe
+    // Méthode POST pour réinitialiser le mot de passe avec le token et le nouveau mot de passe
     @PostMapping("/reset")
     public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
         User user = userService.getUserByResetToken(token);
@@ -59,4 +65,5 @@ public class PasswordResetController {
         userService.updatePassword(user, newPassword);
         return new ResponseEntity<>("Mot de passe mis à jour.", HttpStatus.OK);
     }
+
 }
